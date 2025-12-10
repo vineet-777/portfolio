@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Vineet Gawali - Aspiring AI & Data Science Engineer">
+    <meta name="author" content="Vineet Gawali">
+
+    <!-- 
+    ========================================================================
+    *  Portfolio Website
+    *  Designed & Developed by: Vineet Gawali
+    *  Copyright (c) 2025 Vineet Gawali. All Rights Reserved.
+    *  Unauthorized copying or redistribution of this code is prohibited.
+    ========================================================================
+    -->
+
     <title>Vineet Gawali - Portfolio</title>
-    <link rel="shortcut icon" href="assets/images/coder-illustration-svg-png-download-2895977-238x191.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/coder-illustration-svg-png-download-2895977-238x191.png"
+        type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Liter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-brand">
-                <img src="assets/images/coder-illustration-svg-png-download-2895977-238x191.png" alt="Vineet" class="nav-logo">
+                <img src="assets/images/coder-illustration-svg-png-download-2895977-238x191.png" alt="Vineet"
+                    class="nav-logo">
                 <span class="nav-title">Vineet Gawali</span>
             </div>
             <div class="nav-menu" id="nav-menu">
@@ -26,7 +44,8 @@
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <a href="https://www.instagram.com/gawalivineet?igsh=MWkzYmhjdnhic2ttcg==" class="contact-btn" target="_blank">Contact</a>
+            <a href="https://www.instagram.com/gawalivineet?igsh=MWkzYmhjdnhic2ttcg==" class="contact-btn"
+                target="_blank">Contact</a>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -43,7 +62,7 @@
             </video>
             <div class="hero-overlay"></div>
         </div>
-        <div class="hero-content">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
             <h1 class="hero-title">
                 <span class="hero-name">Vineet Gawali</span>
             </h1>
@@ -63,19 +82,26 @@
     <!-- Projects Section -->
     <section class="projects" id="projects">
         <div class="container">
-            <h2 class="section-title">My Projects</h2>
+            <h2 class="section-title" data-aos="fade-up">My Projects</h2>
             <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="project-image">
                         <img src="assets/images/python-logo-notext.svg-1-800x800.webp" alt="Python Automation">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Automation using Python</h3>
-                        <p class="project-description">A collection of Python scripts for automating various repetitive tasks.</p>
-                        <a href="https://github.com/vineet-777/Automation_Using_Python" class="project-link" target="_blank">
+                        <div class="project-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Automation</span>
+                            <span class="tech-tag">Scripting</span>
+                        </div>
+                        <p class="project-description">A collection of Python scripts for automating various repetitive
+                            tasks.</p>
+                        <a href="https://github.com/vineet-777/Automation_Using_Python" class="project-link"
+                            target="_blank">
                             View Project
                             <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                                <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </a>
                     </div>
@@ -86,11 +112,18 @@
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">AI-Powered Tic Tac Toe</h3>
-                        <p class="project-description">A classic Tic Tac Toe game enhanced with an AI opponent using the Minimax algorithm, allowing players to challenge a computer that never loses.</p>
-                        <a href="https://github.com/vineet-777/harvard-cs50-ai/tree/main/TicTacToe_AI" class="project-link" target="_blank">
+                        <div class="project-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">AI</span>
+                            <span class="tech-tag">Minimax</span>
+                        </div>
+                        <p class="project-description">A classic Tic Tac Toe game enhanced with an AI opponent using the
+                            Minimax algorithm, allowing players to challenge a computer that never loses.</p>
+                        <a href="https://github.com/vineet-777/harvard-cs50-ai/tree/main/TicTacToe_AI"
+                            class="project-link" target="_blank">
                             View Project
                             <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                                <path d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </a>
                     </div>
@@ -103,152 +136,161 @@
     <section class="certifications" id="certifications">
         <div class="container">
             <h2 class="section-title">My Certifications</h2>
-            <div class="certifications-slider">
-                <div class="slider-container">
-                    <div class="certification-card">
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide certification-card">
                         <div class="cert-image">
                             <img src="assets/images/my20learning20-20nvidia-1-480x621.webp" alt="GenAI Certificate">
                         </div>
                         <div class="cert-content">
                             <h3 class="cert-title">GenAI</h3>
-                            <p class="cert-description">Certified in Generative AI by NVIDIA, demonstrating practical skills in building and applying AI models to generate content and solve real-world problems using advanced deep learning techniques.</p>
+                            <p class="cert-description">Certified in Generative AI by NVIDIA, demonstrating practical
+                                skills in building and applying AI models.</p>
                         </div>
                     </div>
-                    <div class="certification-card">
+                    <div class="swiper-slide certification-card">
                         <div class="cert-image">
-                            <img src="assets/images/orcale-ecertificate-3-480x371.webp" alt="AI Foundations Certificate">
+                            <img src="assets/images/orcale-ecertificate-3-480x371.webp"
+                                alt="AI Foundations Certificate">
                         </div>
                         <div class="cert-content">
                             <h3 class="cert-title">AI Foundations</h3>
-                            <p class="cert-description">Certified in Oracle Cloud Infrastructure AI Foundations, demonstrating skills in cloud concepts, AI fundamentals, and building AI-powered solutions.</p>
+                            <p class="cert-description">Certified in Oracle Cloud Infrastructure AI Foundations,
+                                demonstrating skills in cloud concepts and AI.</p>
                         </div>
                     </div>
-                    <div class="certification-card">
+                    <div class="swiper-slide certification-card">
                         <div class="cert-image">
-                            <img src="assets/images/data20literacy20with20ai-certificate-480x339.webp" alt="Data Literacy Certificate">
+                            <img src="assets/images/data20literacy20with20ai-certificate-480x339.webp"
+                                alt="Data Literacy Certificate">
                         </div>
                         <div class="cert-content">
                             <h3 class="cert-title">Data Literate</h3>
-                            <p class="cert-description">Certified in Data Literacy with AI by SoloLearn, demonstrating the ability to understand, analyze, and interpret data effectively while leveraging AI tools.</p>
+                            <p class="cert-description">Certified in Data Literacy with AI by SoloLearn, demonstrating
+                                the ability to understand data effectively.</p>
                         </div>
                     </div>
-                    <div class="certification-card">
+                    <div class="swiper-slide certification-card">
                         <div class="cert-image">
                             <img src="assets/images/ml20for20beginners-certificate-480x339.webp" alt="ML Certificate">
                         </div>
                         <div class="cert-content">
-                            <h3 class="cert-title">ML</h3>
-                            <p class="cert-description">Completed 'Machine Learning for Beginners', gaining foundational knowledge of ML concepts, algorithms, and their applications in solving real-world problems.</p>
+                            <h3 class="cert-title">Machine Learning</h3>
+                            <p class="cert-description">Completed 'Machine Learning for Beginners', gaining foundational
+                                knowledge of ML concepts and algorithms.</p>
                         </div>
                     </div>
-                    <div class="certification-card">
+                    <div class="swiper-slide certification-card">
                         <div class="cert-image">
-                            <img src="assets/images/introduction20to20llms-certificate-480x339.webp" alt="LLM Certificate">
+                            <img src="assets/images/introduction20to20llms-certificate-480x339.webp"
+                                alt="LLM Certificate">
                         </div>
                         <div class="cert-content">
-                            <h3 class="cert-title">LLM's</h3>
-                            <p class="cert-description">Completed 'Introduction to Large Language Models (LLMs)', gaining foundational knowledge of AI language models, their architecture, capabilities, and applications.</p>
+                            <h3 class="cert-title">LLMs</h3>
+                            <p class="cert-description">Completed 'Introduction to Large Language Models', gaining
+                                foundational knowledge of AI language models.</p>
                         </div>
                     </div>
                 </div>
-                <button class="slider-btn prev-btn" id="prevBtn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M15 18L9 12L15 6"/>
-                    </svg>
-                </button>
-                <button class="slider-btn next-btn" id="nextBtn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M9 18L15 12L9 6"/>
-                    </svg>
-                </button>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
     <section class="skills" id="skills">
-        <div class="container">
-            <div class="skills-grid">
-                <div class="skills-column">
-                    <h2 class="section-title">Languages</h2>
-                    <div class="skill-items">
-                        <div class="skill-item" data-aos="fade-right">
-                            <div class="skill-icon">
-                                <img src="assets/images/python-logo-notext.svg-192x192.webp" alt="Python">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">PYTHON</h3>
-                                <p class="skill-description">Proficient in Python programming, with strong skills in writing efficient code, problem-solving, and building projects across data analysis, AI, and automation.</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-right" data-aos-delay="100">
-                            <div class="skill-icon">
-                                <img src="assets/images/java-programming-language-logo.svg-2-192x352.webp" alt="Java">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">JAVA</h3>
-                                <p class="skill-description">Basic knowledge of Java programming, with understanding of core concepts, object-oriented principles, and problem-solving techniques.</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-right" data-aos-delay="200">
-                            <div class="skill-icon">
-                                <img src="assets/images/c-programming-language201-192x212.webp" alt="C">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">C</h3>
-                                <p class="skill-description">Basic knowledge of C++ programming, with understanding of core concepts, object-oriented principles, and problem-solving techniques.</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-right" data-aos-delay="300">
-                            <div class="skill-icon">
-                                <img src="assets/images/sql-database-generic-192x192.webp" alt="SQL">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">SQL</h3>
-                                <p class="skill-description">Basic knowledge of SQL, with experience in writing queries, managing databases, and retrieving data efficiently.</p>
-                            </div>
-                        </div>
+        <div class="container"
+            style="position: relative; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding-top: 2rem;">
+            <h2 class="section-title" style="position: relative; margin-bottom: 4rem; width: 100%; z-index: 20;"
+                data-aos="fade-up">
+                Languages</h2>
+
+            <div class="orbit-container" style="height: 500px;" data-aos="zoom-in" data-aos-delay="200">
+                <!-- Center Core -->
+                <div class="orbit-center">
+                    <div class="core-glow"></div>
+                    <span class="core-text">AI CORE</span>
+                </div>
+
+                <!-- Inner Orbit (Primary) -->
+                <div class="orbit-ring inner-ring">
+                    <div class="orbit-planet" style="--angle: 0deg" data-title="Python"
+                        data-desc="Proficient in Python programming, with strong skills in writing efficient code, problem-solving, and building projects across data analysis, AI, and automation."
+                        data-img="assets/images/python-logo-notext.svg-192x192.webp">
+                        <img src="assets/images/python-logo-notext.svg-192x192.webp" alt="Python">
+                        <span class="planet-tooltip">Python</span>
+                    </div>
+                    <div class="orbit-planet" style="--angle: 180deg" data-title="Java"
+                        data-desc="Basic knowledge of Java programming, with understanding of core concepts, object-oriented principles, and problem-solving techniques."
+                        data-img="assets/images/java-programming-language-logo.svg-2-192x352.webp">
+                        <img src="assets/images/java-programming-language-logo.svg-2-192x352.webp" alt="Java">
+                        <span class="planet-tooltip">Java</span>
                     </div>
                 </div>
-                <div class="skills-column">
-                    <h2 class="section-title">Technical Skills</h2>
-                    <div class="skill-items">
-                        <div class="skill-item" data-aos="fade-left">
-                            <div class="skill-icon">
-                                <img src="assets/images/python-logo-notext.svg-192x192.webp" alt="Tools">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Tools & Frameworks</h3>
-                                <p class="skill-description">PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy, Matplotlib, Jupyter Notebook</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-left" data-aos-delay="100">
-                            <div class="skill-icon">
-                                <img src="assets/images/9fim-kvb-400x400201-192x192.webp" alt="AI-ML">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Machine Learning & AI</h3>
-                                <p class="skill-description">Machine Learning, Deep Learning, Generative AI, LLMs, Data Science</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-left" data-aos-delay="200">
-                            <div class="skill-icon">
-                                <img src="assets/images/images-192x113.webp" alt="Other Skills">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Other Skills</h3>
-                                <p class="skill-description">Problem Solving, Algorithm Design, Data Analysis & Visualization, Data-driven Decision Making</p>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-aos="fade-left" data-aos-delay="300">
-                            <div class="skill-icon">
-                                <img src="assets/images/1-192x192.webp" alt="Soft Skills">
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Soft Skills</h3>
-                                <p class="skill-description">Communication, Teamwork, Problem Solving, Critical Thinking, Adaptability, Time Management</p>
-                            </div>
-                        </div>
+
+                <!-- Outer Orbit (Secondary) -->
+                <div class="orbit-ring outer-ring">
+                    <div class="orbit-planet" style="--angle: 90deg" data-title="C"
+                        data-desc="Basic knowledge of C programming, with understanding of core concepts, object-oriented principles, and problem-solving techniques."
+                        data-img="assets/images/c-programming-language201-192x212.webp">
+                        <img src="assets/images/c-programming-language201-192x212.webp" alt="C">
+                        <span class="planet-tooltip">C</span>
+                    </div>
+                    <div class="orbit-planet" style="--angle: 270deg" data-title="SQL"
+                        data-desc="Basic knowledge of SQL, with experience in writing queries, managing databases, and retrieving data efficiently."
+                        data-img="assets/images/sql-database-generic-192x192.webp">
+                        <img src="assets/images/sql-database-generic-192x192.webp" alt="SQL">
+                        <span class="planet-tooltip">SQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section class="tech-skills" id="tech-skills">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon">
+                        <img src="assets/images/9fim-kvb-400x400201-192x192.webp" alt="AI/ML">
+                    </div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Machine Learning & AI</h3>
+                        <p class="skill-description">Machine Learning, Deep Learning, Generative AI, LLMs, Data Science
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon">
+                        <img src="assets/images/python-logo-notext.svg-192x192.webp" alt="Tools">
+                    </div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Tools & Frameworks</h3>
+                        <p class="skill-description">PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy, Matplotlib,
+                            Jupyter Notebook</p>
+                    </div>
+                </div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-icon">
+                        <img src="assets/images/images-192x113.webp" alt="Data Analysis">
+                    </div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Data Analysis</h3>
+                        <p class="skill-description">Problem Solving, Algorithm Design, Data Analysis & Visualization,
+                            Data-driven Decision Making</p>
+                    </div>
+                </div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-icon">
+                        <img src="assets/images/1-192x192.webp" alt="Soft Skills">
+                    </div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Soft Skills</h3>
+                        <p class="skill-description">Communication, Teamwork, Problem Solving, Critical Thinking,
+                            Adaptability, Time Management</p>
                     </div>
                 </div>
             </div>
@@ -256,17 +298,35 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="cta">
+    <!-- Call to Action (Terminal Style) -->
+    <section class="cta terminal-section">
         <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">View My Work</h2>
-                <a href="https://github.com/vineet-777?tab=repositories" class="cta-btn" target="_blank">See Projects</a>
+            <div class="terminal-container" data-aos="fade-up">
+                <div class="terminal-header">
+                    <div class="terminal-button red"></div>
+                    <div class="terminal-button yellow"></div>
+                    <div class="terminal-button green"></div>
+                    <div class="terminal-title">bash -- viewer</div>
+                </div>
+                <div class="terminal-window">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">vineet@portfolio:~$</span>
+                        <span class="terminal-command" id="typewriter-text"></span><span class="cursor">_</span>
+                    </div>
+                    <div class="terminal-action hidden">
+                        <span class="terminal-success">>> Access Granted. Launching Interface...</span>
+                        <br><br>
+                        <a href="https://github.com/vineet-777?tab=repositories" class="terminal-btn" target="_blank">
+                            [ EXECUTE PROJECT VIEW ]
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="stats">
+    <section class="stats" data-aos="fade-up">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item" data-aos="fade-up">
@@ -290,19 +350,25 @@
         <div class="container">
             <h2 class="section-title">Get Social</h2>
             <div class="social-links">
-                <a href="http://www.linkedin.com/in/vineet-gavali-ba4116330" class="social-link" target="_blank" data-aos="zoom-in">
+                <a href="http://www.linkedin.com/in/vineet-gavali-ba4116330" class="social-link" target="_blank"
+                    data-aos="zoom-in">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
                 </a>
-                <a href="https://github.com/vineet-777" class="social-link" target="_blank" data-aos="zoom-in" data-aos-delay="100">
+                <a href="https://github.com/vineet-777" class="social-link" target="_blank" data-aos="zoom-in"
+                    data-aos-delay="100">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                     </svg>
                 </a>
-                <a href="https://www.instagram.com/gawalivineet?igsh=MWkzYmhjdnhic2ttcg==" class="social-link" target="_blank" data-aos="zoom-in" data-aos-delay="200">
+                <a href="https://www.instagram.com/gawalivineet?igsh=MWkzYmhjdnhic2ttcg==" class="social-link"
+                    target="_blank" data-aos="zoom-in" data-aos-delay="200">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                     </svg>
                 </a>
             </div>
@@ -310,12 +376,30 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" data-aos="fade-up">
         <div class="container">
             <p class="footer-text">© 2025 Vineet Gawali. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Certification Modal -->
+    <div class="cert-modal" id="certModal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <div class="modal-grid">
+                <div class="modal-image">
+                    <img src="" alt="Certificate" id="modalImg">
+                </div>
+                <div class="modal-text">
+                    <h3 id="modalTitle"></h3>
+                    <p id="modalDesc"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
