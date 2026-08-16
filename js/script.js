@@ -435,6 +435,44 @@ function initPeekingBot() {
 
     if (!bot || !chatPanel) return;
 
+    // Rate-limit countdown state (survives panel open/close)
+    let rateLimitCountdownInterval = null;
+    let originalPlaceholder = chatInput?.placeholder ?? 'Ask a question...';
+
+    function clearRateLimitCountdown() {
+        if (rateLimitCountdownInterval) {
+            clearInterval(rateLimitCountdownInterval);
+            rateLimitCountdownInterval = null;
+        }
+    }
+
+    function startRateLimitCountdown(seconds) {
+        clearRateLimitCountdown();
+        
+        if (!chatInput) return;
+        
+        originalPlaceholder = chatInput.placeholder;
+        setChatState(false);
+        
+        const updatePlaceholder = () => {
+            if (seconds <= 0) {
+                clearRateLimitCountdown();
+                setChatState(true);
+                chatInput.placeholder = originalPlaceholder;
+                chatInput.focus();
+                return;
+            }
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const timeStr = mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : `0:${secs.toString().padStart(2, '0')}`;
+            chatInput.placeholder = `You can send another message in ${timeStr}...`;
+            seconds--;
+        };
+        
+        updatePlaceholder(); // immediate first render
+        rateLimitCountdownInterval = setInterval(updatePlaceholder, 1000);
+    }
+
     function openChat() {
         chatPanel.classList.add('active');
         bot.classList.add('hidden-by-chat');
@@ -486,6 +524,38 @@ function initPeekingBot() {
         bot.classList.add('visible');
     }, 600);
 
+    /** Safely parse JSON, returning null on failure. */
+    async function safeJsonParse(response) {
+        try { return await response.json(); } catch { return null; }
+    }
+
+    /** Parse Retry-After header (seconds or HTTP-date) and return human-readable suffix. */
+    function parseRetryAfter(header) {
+        if (!header) return null;
+        const seconds = Number(header);
+        if (!Number.isNaN(seconds) && seconds > 0) return seconds;
+        const date = new Date(header);
+        if (!Number.isNaN(date.valueOf())) {
+            const diff = Math.ceil((date - Date.now()) / 1000);
+            return diff > 0 ? diff : null;
+        }
+        return null;
+    }
+
+    /** Format seconds into human-readable duration string. */
+    function formatDuration(seconds) {
+        if (seconds < 60) return `${seconds} second${seconds === 1 ? '' : 's'}`;
+        const minutes = Math.ceil(seconds / 60);
+        return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+    }
+
+    /** Build user-friendly message with optional retry hint. */
+    function enhanceWithRetryAfter(baseMsg, retryAfterHeader) {
+        const seconds = parseRetryAfter(retryAfterHeader);
+        if (seconds) return `${baseMsg} (try again in about ${formatDuration(seconds)})`;
+        return baseMsg;
+    }
+
     async function handleSendMessage() {
         const message = chatInput.value.trim();
         if (!message) return;
@@ -500,26 +570,56 @@ function initPeekingBot() {
         // 3. Show typing indicator
         const typingId = showTypingIndicator();
 
+        let isRateLimited = false;
+
         try {
             // 4. Send to Worker
             const response = await fetch('https://worker-plain-union-782d.vineetgavali24.workers.dev', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: message })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
             });
+
+            if (response.status === 429) {
+                isRateLimited = true;
+                const errorData = await safeJsonParse(response);
+                const baseMsg = errorData?.error ?? 'Too many requests. Please slow down and try again shortly.';
+                const retryAfterHeader = response.headers.get('Retry-After');
+                console.log('[RateLimit] Retry-After header:', retryAfterHeader);
+                const seconds = parseRetryAfter(retryAfterHeader);
+                console.log('[RateLimit] Parsed seconds:', seconds);
+                
+                let finalMsg = baseMsg;
+                if (seconds) {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    if (mins > 0 && secs > 0) {
+                        finalMsg = `${baseMsg} (try again in ${mins} minute${mins === 1 ? '' : 's'} ${secs} second${secs === 1 ? '' : 's'})`;
+                    } else if (mins > 0) {
+                        finalMsg = `${baseMsg} (try again in ${mins} minute${mins === 1 ? '' : 's'})`;
+                    } else {
+                        finalMsg = `${baseMsg} (try again in ${secs} second${secs === 1 ? '' : 's'})`;
+                    }
+                } else {
+                    // Fallback: show generic message but still start a reasonable countdown
+                    finalMsg = `${baseMsg} (try again shortly)`;
+                }
+                
+                removeMessage(typingId);
+                appendMessage(finalMsg, 'system-message');
+                
+                // Start countdown with parsed seconds or default fallback (60s)
+                const countdownSeconds = seconds ?? 60;
+                startRateLimitCountdown(countdownSeconds);
+                return;
+            }
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const data = await response.json();
-
-            // Extract reply
-            const reply = data?.reply || data?.error || "I'm sorry, I couldn't process that response.";
-
-            // 5. Remove typing indicator & show reply
+            const reply = data?.reply ?? data?.error ?? "I'm sorry, I couldn't process that response.";
             removeMessage(typingId);
             appendMessage(reply, 'system-message');
 
@@ -528,9 +628,10 @@ function initPeekingBot() {
             removeMessage(typingId);
             appendMessage("Sorry, I'm having trouble connecting right now. Please try again later.", 'system-message');
         } finally {
-            // 6. Re-enable input
-            setChatState(true);
-            chatInput.focus();
+            if (!isRateLimited) {
+                setChatState(true);
+                chatInput.focus();
+            }
         }
     }
 
