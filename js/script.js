@@ -185,48 +185,79 @@ function initProjectFilter() {
     });
 }
 
-/* --- Contact Form (Formspree AJAX) --- */
+/* --- Contact Form (Input CTA + Formspree AJAX) --- */
 function initForm() {
+    const stage1 = document.getElementById('contact-stage-1');
+    const ctaInput = document.getElementById('contact-cta-input');
+    const ctaSend = document.getElementById('contact-cta-send');
+    const formWrapper = document.getElementById('contact-form-wrapper');
     const form = document.getElementById('contact-form');
+    const messageInput = document.getElementById('message');
+    const backButton = document.getElementById('contact-back-btn');
     const status = document.getElementById('form-status');
 
-    if (!form) return;
+    if (!stage1 || !ctaInput || !ctaSend || !formWrapper || !form || !messageInput || !backButton || !status) {
+        return;
+    }
 
-    form.addEventListener("submit", async function (event) {
+    function updateCtaButton() {
+        ctaSend.classList.toggle('contact-send-btn-hidden', !ctaInput.value.trim());
+    }
+
+    function showForm() {
+        if (!ctaInput.value.trim()) return;
+
+        stage1.classList.add('hidden');
+        formWrapper.classList.add('active');
+        messageInput.value = ctaInput.value;
+        requestAnimationFrame(() => messageInput.focus());
+    }
+
+    function showCta(message = '') {
+        formWrapper.classList.remove('active');
+        ctaInput.value = message;
+        updateCtaButton();
+        stage1.classList.remove('hidden');
+    }
+
+    ctaInput.addEventListener('input', updateCtaButton);
+    ctaInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            showForm();
+        }
+    });
+    ctaSend.addEventListener('click', showForm);
+    backButton.addEventListener('click', () => showCta(messageInput.value));
+
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
         status.textContent = 'Sending...';
         status.className = 'form-status';
         status.style.opacity = '1';
 
-        const data = new FormData(event.target);
-
         try {
-            const response = await fetch(event.target.action, {
+            const response = await fetch(form.action, {
                 method: form.method,
-                body: data,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                body: new FormData(form),
+                headers: { Accept: 'application/json' }
             });
 
-            if (response.ok) {
-                status.textContent = "Thanks for your message! I'll get back to you soon.";
-                status.className = "form-status success";
-                form.reset();
-            } else {
-                const result = await response.json();
-                if (Object.hasOwn(result, 'errors')) {
-                    status.textContent = result.errors.map(error => error.message).join(", ");
-                } else {
-                    status.textContent = "Oops! There was a problem submitting your form";
-                }
-                status.className = "form-status error";
+            if (!response.ok) {
+                throw new Error('Submission failed');
             }
+
+            status.textContent = "Thanks! I'll get back to you personally by email.";
+            status.className = 'form-status success';
+            form.reset();
+            setTimeout(() => showCta(), 1800);
         } catch (error) {
-            status.textContent = "Oops! There was a problem submitting your form";
-            status.className = "form-status error";
+            status.textContent = 'Oops! There was a problem submitting your form.';
+            status.className = 'form-status error';
         }
     });
+
+    updateCtaButton();
 }
 
 /* --- Generative Canvas (Synaptic Flow) --- */
