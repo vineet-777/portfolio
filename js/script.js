@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initProjectFilter();
     initForm();
     initGenerativeCanvas();
-    initChatWidget();
+    initPeekingBot();
 });
 
 /* --- Theme Toggle --- */
@@ -422,9 +422,10 @@ function initGenerativeCanvas() {
     animate();
 }
 
-/* --- AI Chat Widget --- */
-function initChatWidget() {
-    const chatToggle = document.getElementById('chat-toggle');
+/* --- Peeking Bot --- */
+function initPeekingBot() {
+    const bot = document.getElementById('peeking-bot');
+    const botImage = document.getElementById('peeking-bot-image');
     const chatClose = document.getElementById('chat-close');
     const chatPanel = document.getElementById('chat-panel');
     const chatLauncher = document.getElementById('open-ai-assistant');
@@ -432,39 +433,58 @@ function initChatWidget() {
     const chatSend = document.getElementById('chat-send');
     const chatMessages = document.getElementById('chat-messages');
 
-    if (!chatToggle || !chatPanel) return;
+    if (!bot || !chatPanel) return;
 
-    function setChatOpen(isOpen) {
-        chatPanel.classList.toggle('active', isOpen);
-        chatToggle.setAttribute('aria-expanded', String(isOpen));
-        if (chatLauncher) chatLauncher.setAttribute('aria-expanded', String(isOpen));
-
-        if (isOpen) {
-            chatInput.focus();
-        }
+    function openChat() {
+        chatPanel.classList.add('active');
+        bot.classList.add('hidden-by-chat');
+        document.body.classList.add('chat-open');
+        if (chatLauncher) chatLauncher.setAttribute('aria-expanded', 'true');
+        if (chatInput) setTimeout(() => chatInput.focus(), 100);
     }
 
-    // Toggle panel from the floating assistant button.
-    chatToggle.addEventListener('click', () => {
-        setChatOpen(!chatPanel.classList.contains('active'));
-    });
+    function closeChat() {
+        chatPanel.classList.remove('active');
+        bot.classList.remove('hidden-by-chat');
+        document.body.classList.remove('chat-open');
+        if (chatLauncher) chatLauncher.setAttribute('aria-expanded', 'false');
+    }
 
-    chatClose.addEventListener('click', () => {
-        setChatOpen(false);
-    });
+    botImage.addEventListener('click', openChat);
 
-    // Open the assistant directly from the hero call-to-action.
-    chatLauncher?.addEventListener('click', () => setChatOpen(true));
-
-    // Send message on click
-    chatSend.addEventListener('click', handleSendMessage);
-
-    // Send message on Enter
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleSendMessage();
+    botImage.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openChat();
         }
     });
+
+    if (chatClose) {
+        chatClose.addEventListener('click', closeChat);
+    }
+
+    if (chatLauncher) {
+        chatLauncher.addEventListener('click', openChat);
+    }
+
+    // Send message on click
+    if (chatSend) {
+        chatSend.addEventListener('click', handleSendMessage);
+    }
+
+    // Send message on Enter
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+    }
+
+    // Entrance animation
+    setTimeout(() => {
+        bot.classList.add('visible');
+    }, 600);
 
     async function handleSendMessage() {
         const message = chatInput.value.trim();
