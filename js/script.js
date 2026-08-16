@@ -26,10 +26,10 @@ function initTheme() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
-        setTheme('light');
-    } else {
+    if (savedTheme === 'dark') {
         setTheme('dark');
+    } else {
+        setTheme('light');
     }
 
     themeToggle.addEventListener('click', () => {
@@ -427,23 +427,34 @@ function initChatWidget() {
     const chatToggle = document.getElementById('chat-toggle');
     const chatClose = document.getElementById('chat-close');
     const chatPanel = document.getElementById('chat-panel');
+    const chatLauncher = document.getElementById('open-ai-assistant');
     const chatInput = document.getElementById('chat-input');
     const chatSend = document.getElementById('chat-send');
     const chatMessages = document.getElementById('chat-messages');
 
     if (!chatToggle || !chatPanel) return;
 
-    // Toggle panel
-    chatToggle.addEventListener('click', () => {
-        chatPanel.classList.toggle('active');
-        if (chatPanel.classList.contains('active')) {
+    function setChatOpen(isOpen) {
+        chatPanel.classList.toggle('active', isOpen);
+        chatToggle.setAttribute('aria-expanded', String(isOpen));
+        if (chatLauncher) chatLauncher.setAttribute('aria-expanded', String(isOpen));
+
+        if (isOpen) {
             chatInput.focus();
         }
+    }
+
+    // Toggle panel from the floating assistant button.
+    chatToggle.addEventListener('click', () => {
+        setChatOpen(!chatPanel.classList.contains('active'));
     });
 
     chatClose.addEventListener('click', () => {
-        chatPanel.classList.remove('active');
+        setChatOpen(false);
     });
+
+    // Open the assistant directly from the hero call-to-action.
+    chatLauncher?.addEventListener('click', () => setChatOpen(true));
 
     // Send message on click
     chatSend.addEventListener('click', handleSendMessage);
