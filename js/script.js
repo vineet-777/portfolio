@@ -8,6 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initNav();
+    initSmoothScroll();
     initScrollReveal();
     initProjectFilter();
     initForm();
@@ -60,17 +61,6 @@ function initNav() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section');
-
-    // Scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        updateActiveLink();
-    });
 
     // Mobile menu toggle
     hamburger.addEventListener('click', () => {
@@ -84,34 +74,220 @@ function initNav() {
         });
     });
 
-    // Close mobile menu on link click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
+    // Smooth scroll for anchor links
+    const allNavLinks = document.querySelectorAll('.nav-link, .nav-brand');
+    allNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            if (!targetId || !targetId.startsWith('#')) return;
+
+            e.preventDefault();
+            const target = document.querySelector(targetId);
+            if (!target) return;
+
+            try {
+                const navbarHeight = navbar.getBoundingClientRect().height;
+                const rect = target.getBoundingClientRect();
+                const currentScrollY = window.getSmoothScrollY ? window.getSmoothScrollY() : window.scrollY;
+                const targetPosition = currentScrollY + rect.top - navbarHeight;
+
+                if (window.smoothScrollAPI) {
+                    window.smoothScrollAPI.scrollTo(targetPosition);
+                } else {
+                    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    if (prefersReducedMotion) {
+                        window.scrollTo(0, targetPosition);
+                    } else {
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                }
+            } catch (err) {
+                console.warn('Smooth scroll fallback:', err);
+                window.location.href = targetId;
+            }
+
+            // Close mobile menu
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+            const mobileOnly = document.querySelectorAll('.mobile-only');
+            mobileOnly.forEach(el => {
+                el.style.display = 'none';
+            });
         });
     });
+}
 
-    // Update active nav link based on scroll position
-    function updateActiveLink() {
-        let current = '';
-        const scrollY = window.scrollY;
+/* --- Smooth Scroll --- */
+function initSmoothScroll() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
+    const wrapper = document.getElementById('smooth-scroll-wrapper');
+    const navbar = document.getElementById('navbar');
+    if (!wrapper || !navbar) return;
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+    let target = 0;
+    let current = 0;
+    let rafId = null;
+    const ease = 0.08;
+
+    function getMaxScroll() {
+        return wrapper.scrollHeight - window.innerHeight;
     }
+
+    function animate() {
+        if (prefersReducedMotion) {
+            current = target;
+            wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+            rafId = null;
+            return;
+        }
+
+        current += (target - current) * ease;
+
+        if (Math.abs(target - current) < 0.5) {
+            current = target;
+            wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+            rafId = null;
+            return;
+        }
+
+        wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+
+        // Update navbar state
+        if (current > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Update active nav link
+        updateActiveLinkFromPosition(current);
+
+        rafId = requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+        if (!rafId) {
+            rafId = requestAnimationFrame(animate);
+        }
+    }
+
+    function scrollToPosition(position) {
+        target = Math.max(0, Math.min(position, getMaxScroll()));
+        if (prefersReducedMotion) {
+            current = target;
+            wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+        } else {
+            startAnimation();
+        }
+    }
+
+    // Expose API globally
+    window.smoothScrollAPI = {
+        scrollTo: scrollToPosition,
+        getScrollY: () => current
+    };
+    window.getSmoothScrollY = () => current;
+
+    // Wheel event
+    if (!prefersReducedMotion) {
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            target += e.deltaY;
+            target = Math.max(0, Math.min(target, getMaxScroll()));
+            startAnimation();
+        }, { passive: false });
+    }
+
+    // Touch support
+    let touchStartY = 0;
+    let touchLastY = 0;
+
+    window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+        touchLastY = touchStartY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (prefersReducedMotion) return;
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchLastY - touchY;
+        touchLastY = touchY;
+        target += deltaY;
+        target = Math.max(0, Math.min(target, getMaxScroll()));
+        startAnimation();
+    }, { passive: true });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        const key = e.key;
+        let delta = 0;
+
+        if (key === 'ArrowDown' || key === 'ArrowRight') {
+            delta = 100;
+        } else if (key === 'ArrowUp' || key === 'ArrowLeft') {
+            delta = -100;
+        } else if (key === ' ' || key === 'PageDown') {
+            delta = window.innerHeight;
+            e.preventDefault();
+        } else if (key === 'PageUp') {
+            delta = -window.innerHeight;
+        } else if (key === 'Home') {
+            scrollToPosition(0);
+            return;
+        } else if (key === 'End') {
+            scrollToPosition(getMaxScroll());
+            return;
+        }
+
+        if (delta !== 0) {
+            scrollToPosition(target + delta);
+        }
+    });
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+        target = Math.max(0, Math.min(target, getMaxScroll()));
+        current = target;
+        wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+        updateActiveLinkFromPosition(current);
+    });
+
+    // Initial hash scroll
+    const hash = window.location.hash;
+    if (hash) {
+        const targetEl = document.querySelector(hash);
+        if (targetEl) {
+            const navbarHeight = navbar.getBoundingClientRect().height;
+            const rect = targetEl.getBoundingClientRect();
+            const position = rect.top + current - navbarHeight;
+            target = Math.max(0, Math.min(position, getMaxScroll()));
+            current = target;
+            wrapper.style.transform = `translate3d(0, ${-current}px, 0)`;
+        }
+    }
+}
+
+function updateActiveLinkFromPosition(scrollY) {
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    const navbarHeight = navbar.getBoundingClientRect().height;
+
+    let current = '';
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= navbarHeight && rect.bottom > navbarHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
 }
 
 /* --- Scroll Reveal & Skill Bars --- */
@@ -401,8 +577,10 @@ function initGenerativeCanvas() {
     function animate() {
         animationId = requestAnimationFrame(animate);
 
+        const scrollY = window.getSmoothScrollY ? window.getSmoothScrollY() : window.scrollY;
+
         // Stop animation if hero is out of view
-        if (window.scrollY > height) return;
+        if (scrollY > height) return;
 
         ctx.clearRect(0, 0, width, height);
 
