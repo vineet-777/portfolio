@@ -649,7 +649,29 @@ function initPeekingBot() {
         if (className === 'system-message') {
             // Assistant replies may contain Markdown — parse then sanitize before inserting
             const rawHtml = marked.parse(text);
-            msgDiv.innerHTML = DOMPurify.sanitize(rawHtml);
+            const cleanHtml = DOMPurify.sanitize(rawHtml);
+            
+            // Create temp container to manipulate tables
+            const temp = document.createElement('div');
+            temp.innerHTML = cleanHtml;
+            
+            // Wrap each table for containment + responsive labels
+            temp.querySelectorAll('table').forEach(table => {
+                // 1. Add header labels to cells for mobile card view
+                const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+                table.querySelectorAll('tbody td').forEach((td, i) => {
+                    const colIndex = i % headers.length;
+                    if (headers[colIndex]) td.setAttribute('data-label', headers[colIndex]);
+                });
+                
+                // 2. Wrap in scrolling container
+                const wrapper = document.createElement('div');
+                wrapper.className = 'chat-table-wrapper';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            });
+            
+            msgDiv.innerHTML = temp.innerHTML;
         } else {
             // User messages: always plain text, never parsed as HTML/Markdown
             msgDiv.textContent = text;

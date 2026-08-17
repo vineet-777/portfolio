@@ -206,10 +206,20 @@ section {
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.02em;
+    transition: color var(--transition-fast);
+}
+
+.nav-brand:hover {
+    color: var(--accent);
+}
+
+.nav-brand:hover span {
+    color: var(--accent);
 }
 
 .nav-brand span {
     color: var(--accent);
+    transition: color var(--transition-fast);
 }
 
 .nav-menu {
@@ -1367,6 +1377,7 @@ textarea.form-input {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  min-width: 0;
 }
 
 .message {
@@ -1376,6 +1387,7 @@ textarea.form-input {
   font-size: var(--text-sm);
   line-height: 1.5;
   word-wrap: break-word;
+  min-width: 0;
 }
 
 .system-message {
@@ -1481,6 +1493,56 @@ textarea.form-input {
   40% {
     transform: scale(1);
   }
+}
+
+/* --- Chat Table Containment --- */
+.chat-table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: var(--space-2) 0;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
+}
+
+.chat-table-wrapper table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.chat-table-wrapper th,
+.chat-table-wrapper td {
+  padding: 12px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.chat-table-wrapper th {
+  background: var(--surface-2);
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.chat-table-wrapper td {
+  word-wrap: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Give breathing room to content-heavy columns */
+.chat-table-wrapper th:nth-child(2),
+.chat-table-wrapper td:nth-child(2),
+.chat-table-wrapper th:nth-child(3),
+.chat-table-wrapper td:nth-child(3) {
+  min-width: 150px;
 }
 
 /* Markdown content inside chat replies */
@@ -1602,6 +1664,28 @@ textarea.form-input {
   .chat-input-area {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
+
+  /* Force horizontal scroll for tables on mobile */
+  .chat-table-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    display: block;
+  }
+  .chat-table-wrapper table {
+    min-width: 500px;
+    width: max-content;
+  }
+  
+  /* Disable card view on mobile - keep horizontal scroll instead */
+  .chat-table-wrapper thead { display: table-header-group !important; }
+  .chat-table-wrapper tbody { display: table-row-group !important; }
+  .chat-table-wrapper tr { display: table-row !important; }
+  .chat-table-wrapper td { 
+    display: table-cell !important; 
+    white-space: normal !important;
+  }
+  .chat-table-wrapper td::before { content: none !important; }
 }
 
 /* Reduced Motion */
