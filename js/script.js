@@ -197,18 +197,21 @@ function initForm() {
     const stage1 = document.getElementById('contact-stage-1');
     const ctaInput = document.getElementById('contact-cta-input');
     const ctaSend = document.getElementById('contact-cta-send');
+    const ctaClick = document.getElementById('contact-cta-click-btn');
     const formWrapper = document.getElementById('contact-form-wrapper');
     const form = document.getElementById('contact-form');
     const messageInput = document.getElementById('message');
     const backButton = document.getElementById('contact-back-btn');
     const status = document.getElementById('form-status');
 
-    if (!stage1 || !ctaInput || !ctaSend || !formWrapper || !form || !messageInput || !backButton || !status) {
+    if (!stage1 || !ctaInput || !ctaSend || !ctaClick || !formWrapper || !form || !messageInput || !backButton || !status) {
         return;
     }
 
     function updateCtaButton() {
-        ctaSend.classList.toggle('contact-send-btn-hidden', !ctaInput.value.trim());
+        const hasInput = !!ctaInput.value.trim();
+        ctaSend.classList.toggle('contact-send-btn-hidden', !hasInput);
+        ctaClick.classList.toggle('contact-cta-click-btn-hidden', hasInput);
     }
 
     function showForm() {

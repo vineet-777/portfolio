@@ -324,8 +324,27 @@
                     <h3>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2v20"></path>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            <!-- Central LLM core -->
+                            <ellipse cx="12" cy="12" rx="3.5" ry="3" />
+                            <!-- Generative: diffusion-style noise particles around core -->
+                            <circle cx="6" cy="6" r="1.5" opacity="0.6" />
+                            <circle cx="18" cy="6" r="1.5" opacity="0.6" />
+                            <circle cx="6" cy="18" r="1.5" opacity="0.6" />
+                            <circle cx="18" cy="18" r="1.5" opacity="0.6" />
+                            <circle cx="12" cy="4" r="1" opacity="0.4" />
+                            <circle cx="12" cy="20" r="1" opacity="0.4" />
+                            <circle cx="4" cy="12" r="1" opacity="0.4" />
+                            <circle cx="20" cy="12" r="1" opacity="0.4" />
+                            <!-- Agentic: orchestration flow arrows -->
+                            <path d="M9 12h-2" />
+                            <path d="M15 12h2" />
+                            <path d="M12 9v-2" />
+                            <path d="M12 15v2" />
+                            <!-- Agent connections: directional edges between nodes -->
+                            <path d="M15.5 10.5 13.5 12.5" stroke-width="1.5" />
+                            <path d="M8.5 13.5 10.5 11.5" stroke-width="1.5" />
+                            <path d="M13.5 13.5 11.5 11.5" stroke-width="1.5" />
+                            <path d="M10.5 10.5 8.5 12.5" stroke-width="1.5" />
                         </svg>
                         Generative AI & Agentic Systems
                     </h3>
@@ -401,6 +420,9 @@
                             <input type="text" id="contact-cta-input" class="contact-cta-input"
                                 placeholder="build me ..." aria-label="Describe what you need">
                         </div>
+                        <button type="button" class="contact-cta-click-btn" id="contact-cta-click-btn">
+                            Click on "build me..."
+                        </button>
                         <button type="button" class="contact-send-btn contact-send-btn-hidden" id="contact-cta-send">
                             Send
                         </button>
@@ -472,7 +494,7 @@
       <div class="peeking-bot-image" id="peeking-bot-image">
         <img src="assets/images/bot-peeking-from-right.png" alt="AI Bot" class="peeking-bot-img" />
       </div>
-      <span class="peeking-bot-label">ask me about vineet</span>
+      <span class="peeking-bot-label">Ask me about Vineet</span>
 
       <div class="chat-panel" id="chat-panel">
         <div class="chat-header">

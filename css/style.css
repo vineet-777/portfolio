@@ -906,6 +906,30 @@ section {
     transition: opacity var(--transition-fast), max-width var(--transition-base), transform var(--transition-fast);
 }
 
+/* STAGE 1: Click Me CTA Button */
+.contact-cta-click-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--contact-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+.contact-cta-click-btn-hidden {
+    display: none;
+}
+
 .contact-send-btn:not(.contact-send-btn-hidden) {
     max-width: 7rem;
     opacity: 1;
