@@ -151,18 +151,25 @@ function initScrollReveal() {
 function initProjectFilter() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projects = document.querySelectorAll('.project-card');
+    const grid = document.querySelector('.projects-grid');
+
+    function updateGridCount() {
+        if (!grid) return;
+        const visible = Array.from(projects).filter(p => p.style.display !== 'none').length;
+        grid.dataset.count = visible || 1;
+    }
+
+    // Initial count
+    updateGridCount();
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active class from all buttons
             filterBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
             btn.classList.add('active');
 
             const filter = btn.getAttribute('data-filter');
 
             projects.forEach(project => {
-                // First fade out
                 project.style.opacity = '0';
                 project.style.transform = 'scale(0.95)';
 
@@ -171,7 +178,6 @@ function initProjectFilter() {
 
                     if (filter === 'all' || categories.includes(filter)) {
                         project.style.display = 'flex';
-                        // Small delay before fade in to allow display:flex to apply
                         setTimeout(() => {
                             project.style.opacity = '1';
                             project.style.transform = 'scale(1)';
@@ -179,7 +185,8 @@ function initProjectFilter() {
                     } else {
                         project.style.display = 'none';
                     }
-                }, 300); // Wait for fade out transition
+                    updateGridCount();
+                }, 300);
             });
         });
     });

@@ -89,13 +89,57 @@
         <div class="container">
             <h2 class="section-title reveal">Featured <span>Projects</span></h2>
 
-            <div class="project-filters reveal">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="ai">AI / ML</button>
-                <button class="filter-btn" data-filter="web">Web</button>
-            </div>
-
             <div class="projects-grid">
+                <!-- Local GraphRAG -->
+                <article class="project-card reveal" data-category="ai">
+                    <div class="project-image">
+                        <img src="assets/images/local_graphrag_card.png" alt="Local GraphRAG" loading="lazy">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag lang">Python</span>
+                            <span class="tag ai">LangGraph</span>
+                            <span class="tag ai">RAG</span>
+                        </div>
+                        <h3 class="project-title">Local GraphRAG</h3>
+                        <p class="project-desc">A fully local, multi-agent RAG system combining vector search and a
+                            knowledge graph for dual-path retrieval, with an LLM router that classifies each query
+                            and orchestrates the pipeline via LangGraph — all running on-device with no cloud APIs.</p>
+                        <a href="https://github.com/vineet-777/local-graphrag"
+                            class="project-link" target="_blank">
+                            View Source
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- AI Portfolio Assistant — LLM Security Hardening -->
+                <article class="project-card reveal" data-category="ai">
+                    <div class="project-image">
+                        <img src="assets/images/ai_portfolio_assistant_card.png" alt="AI Portfolio Assistant — LLM Security Hardening" loading="lazy">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag lang">JavaScript</span>
+                            <span class="tag ai">Groq API (Llama 3.3 70B)</span>
+                            <span class="tag ai">Cloudflare Workers</span>
+                        </div>
+                        <h3 class="project-title">AI Portfolio Assistant — LLM Security Hardening</h3>
+                        <p class="project-desc">Red-teamed a self-built portfolio chatbot against 9 jailbreak/prompt-injection techniques mapped to the OWASP Top 10 for LLM Applications, uncovering and closing 2 exploitable vulnerabilities — reaching 7/7 blocked techniques on the final pass.</p>
+                        <a href="https://github.com/vineet-777/ai-portfolio-assistant" class="project-link" target="_blank">
+                            View Source
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
                 <!-- AI Interviewer -->
                 <article class="project-card reveal" data-category="ai web">
                     <div class="project-image">
@@ -121,31 +165,6 @@
                     </div>
                 </article>
 
-                <!-- AI Tic Tac Toe -->
-                <article class="project-card reveal" data-category="ai">
-                    <div class="project-image">
-                        <img src="assets/images/ai_tic_tac_toe_card.png" alt="AI Tic Tac Toe" loading="lazy">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag lang">Python</span>
-                            <span class="tag ai">Minimax Algorithm</span>
-                        </div>
-                        <h3 class="project-title">AI-Powered Tic Tac Toe</h3>
-                        <p class="project-desc">A classic game enhanced with an AI opponent using the Minimax algorithm,
-                            allowing players to challenge a computer that evaluates all possible moves.</p>
-                        <a href="https://github.com/vineet-777/harvard-cs50-ai/tree/main/TicTacToe_AI"
-                            class="project-link" target="_blank">
-                            View Source
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
                 <!-- AI Image Colorizer -->
                 <article class="project-card reveal" data-category="ai web">
                     <div class="project-image">
@@ -160,31 +179,6 @@
                         <p class="project-desc">A web application that uses deep learning to automatically convert
                             black-and-white images into colorized versions, complete with user authentication.</p>
                         <a href="https://github.com/vineet-777/AI_Image_Colorizer" class="project-link" target="_blank">
-                            View Source
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Python Automation -->
-                <article class="project-card reveal" data-category="all">
-                    <div class="project-image">
-                        <img src="assets/images/python_automation_card.png" alt="Python Automation" loading="lazy">
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="tag lang">Python</span>
-                            <span class="tag">Scripting</span>
-                        </div>
-                        <h3 class="project-title">Python Automation Suite</h3>
-                        <p class="project-desc">A collection of robust Python scripts for automating various repetitive
-                            tasks, streamlining workflows, and improving daily productivity.</p>
-                        <a href="https://github.com/vineet-777/Automation_Using_Python" class="project-link"
-                            target="_blank">
                             View Source
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
