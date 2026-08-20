@@ -401,26 +401,6 @@ section {
     flex-wrap: wrap;
 }
 
-.filter-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    padding: 0.5rem 1.25rem;
-    border-radius: 2rem;
-    font-size: var(--text-sm);
-    font-family: var(--font-body);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-    background: var(--surface-2);
-    color: var(--text-primary);
-    border-color: var(--text-primary);
-}
-
 .projects-grid {
     display: grid;
     gap: var(--space-6);
@@ -432,11 +412,6 @@ section {
 .projects-grid[data-count="2"] { --grid-cols: 2; }
 .projects-grid[data-count="3"] { --grid-cols: 3; }
 .projects-grid[data-count="4"] { --grid-cols: 2; }
-.projects-grid[data-count="5"] { --grid-cols: 3; }
-.projects-grid[data-count="6"] { --grid-cols: 3; }
-.projects-grid[data-count="7"] { --grid-cols: 3; }
-.projects-grid[data-count="8"] { --grid-cols: 4; }
-.projects-grid[data-count="9"] { --grid-cols: 3; }
 
 @media (max-width: 1024px) {
     .projects-grid {
@@ -906,8 +881,8 @@ section {
     transition: opacity var(--transition-fast), max-width var(--transition-base), transform var(--transition-fast);
 }
 
-/* STAGE 1: Click Me CTA Button */
-.contact-cta-click-btn {
+/* STAGE 1: Click Me CTA Text */
+.contact-cta-click-text {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -926,7 +901,7 @@ section {
     transition: opacity var(--transition-fast), visibility var(--transition-fast);
 }
 
-.contact-cta-click-btn-hidden {
+.contact-cta-click-text-hidden {
     display: none;
 }
 

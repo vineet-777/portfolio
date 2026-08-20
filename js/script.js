@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initNav();
     initScrollReveal();
-    initProjectFilter();
     initForm();
     initGenerativeCanvas();
     initPeekingBot();
@@ -147,57 +146,12 @@ function initScrollReveal() {
     });
 }
 
-/* --- Project Filtering --- */
-function initProjectFilter() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projects = document.querySelectorAll('.project-card');
-    const grid = document.querySelector('.projects-grid');
-
-    function updateGridCount() {
-        if (!grid) return;
-        const visible = Array.from(projects).filter(p => p.style.display !== 'none').length;
-        grid.dataset.count = visible || 1;
-    }
-
-    // Initial count
-    updateGridCount();
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.getAttribute('data-filter');
-
-            projects.forEach(project => {
-                project.style.opacity = '0';
-                project.style.transform = 'scale(0.95)';
-
-                setTimeout(() => {
-                    const categories = project.getAttribute('data-category').split(' ');
-
-                    if (filter === 'all' || categories.includes(filter)) {
-                        project.style.display = 'flex';
-                        setTimeout(() => {
-                            project.style.opacity = '1';
-                            project.style.transform = 'scale(1)';
-                        }, 50);
-                    } else {
-                        project.style.display = 'none';
-                    }
-                    updateGridCount();
-                }, 300);
-            });
-        });
-    });
-}
-
 /* --- Contact Form (Input CTA + Formspree AJAX) --- */
 function initForm() {
     const stage1 = document.getElementById('contact-stage-1');
     const ctaInput = document.getElementById('contact-cta-input');
     const ctaSend = document.getElementById('contact-cta-send');
-    const ctaClick = document.getElementById('contact-cta-click-btn');
+    const ctaClick = document.getElementById('contact-cta-click-text');
     const formWrapper = document.getElementById('contact-form-wrapper');
     const form = document.getElementById('contact-form');
     const messageInput = document.getElementById('message');
@@ -211,7 +165,7 @@ function initForm() {
     function updateCtaButton() {
         const hasInput = !!ctaInput.value.trim();
         ctaSend.classList.toggle('contact-send-btn-hidden', !hasInput);
-        ctaClick.classList.toggle('contact-cta-click-btn-hidden', hasInput);
+        ctaClick.classList.toggle('contact-cta-click-text-hidden', hasInput);
     }
 
     function showForm() {
@@ -534,11 +488,6 @@ function initPeekingBot() {
         bot.classList.add('visible');
     }, 600);
 
-    /** Safely parse JSON, returning null on failure. */
-    async function safeJsonParse(response) {
-        try { return await response.json(); } catch { return null; }
-    }
-
     /** Parse Retry-After header (seconds or HTTP-date) and return human-readable suffix. */
     function parseRetryAfter(header) {
         if (!header) return null;
@@ -550,20 +499,6 @@ function initPeekingBot() {
             return diff > 0 ? diff : null;
         }
         return null;
-    }
-
-    /** Format seconds into human-readable duration string. */
-    function formatDuration(seconds) {
-        if (seconds < 60) return `${seconds} second${seconds === 1 ? '' : 's'}`;
-        const minutes = Math.ceil(seconds / 60);
-        return `${minutes} minute${minutes === 1 ? '' : 's'}`;
-    }
-
-    /** Build user-friendly message with optional retry hint. */
-    function enhanceWithRetryAfter(baseMsg, retryAfterHeader) {
-        const seconds = parseRetryAfter(retryAfterHeader);
-        if (seconds) return `${baseMsg} (try again in about ${formatDuration(seconds)})`;
-        return baseMsg;
     }
 
     async function handleSendMessage() {
@@ -592,7 +527,7 @@ function initPeekingBot() {
 
             if (response.status === 429) {
                 isRateLimited = true;
-                const errorData = await safeJsonParse(response);
+                const errorData = await response.json().catch(() => null);
                 const baseMsg = errorData?.error ?? 'Too many requests. Please slow down and try again shortly.';
                 const retryAfterHeader = response.headers.get('Retry-After');
                 console.log('[RateLimit] Retry-After header:', retryAfterHeader);
